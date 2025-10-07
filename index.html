@@ -17,6 +17,68 @@
       h1, h2, .font-koulen {
         font-family: 'Koulen', cursive;
       }
+
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        #invoice-content, #invoice-content * {
+          visibility: visible;
+        }
+        #invoice-content {
+          position: absolute;
+          left: 0;
+          top: 0;
+          margin: 0;
+          padding: 10px;
+          width: 100%;
+          max-width: 300px;
+          font-size: 10pt;
+          color: #000;
+          box-shadow: none !important;
+          border: 1px dashed #000;
+          border-radius: 0;
+          background: #fff !important;
+        }
+        .no-print, .no-print * {
+          display: none !important;
+          visibility: hidden !important;
+        }
+        .print-only {
+          display: block !important;
+          visibility: visible !important;
+        }
+        #invoice-content header {
+          background: transparent !important;
+          color: #000 !important;
+          padding: 5px 0 !important;
+          text-align: center;
+          border-bottom: 2px dashed #000;
+          margin-bottom: 15px;
+        }
+        #invoice-content header h1 {
+          font-size: 14pt !important;
+        }
+        #invoice-content header p {
+          display: none;
+        }
+        #invoice-content section {
+          background: transparent !important;
+          padding: 0 !important;
+          border: none !important;
+        }
+        #invoice-content .border-t.border-dashed.border-slate-300 {
+          border-color: #000 !important;
+          margin-top: 10px !important;
+          margin-bottom: 10px !important;
+        }
+        #invoice-content div.text-xl.font-bold {
+          font-size: 12pt !important;
+        }
+        #invoice-content .text-blue-600 {
+          color: #000 !important;
+        }
+      }
     </style>
   <script type="importmap">
 {
