@@ -1,8 +1,5 @@
-
 {
   "name": "Khmer Invoice Bill",
   "description": "A simple application to calculate electricity and water supply bills in Khmer Riel, including service fees. The UI is designed to be mobile-friendly and easy to use.",
-  "requestFramePermissions": [
-    "bluetooth"
-  ]
+  "requestFramePermissions": []
 }
