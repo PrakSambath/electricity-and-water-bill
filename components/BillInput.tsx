@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BillInputProps } from '../types';
 import { BillType } from '../types';
@@ -43,33 +42,46 @@ const Icon: React.FC<{ type: BillType }> = ({ type }) => {
 };
 
 const BillInput: React.FC<BillInputProps> = ({
-  label,
-  value,
-  onChange,
-  type,
+  bill,
+  onAmountChange,
+  onRemove,
 }) => {
+  const { id, type, amount } = bill;
+  const label = type === BillType.ELECTRICITY ? 'ថ្លៃអគ្គិសនី' : 'ថ្លៃទឹកស្អាត';
+
   return (
-    <div>
+    <div className="animate-fade-in">
       <label
-        htmlFor={label}
+        htmlFor={id}
         className="flex items-center gap-2 mb-2 text-md font-bold text-slate-600"
       >
         <Icon type={type} />
         {label}
       </label>
-      <div className="relative">
-        <input
-          id={label}
-          type="number"
-          value={value}
-          onChange={onChange}
-          placeholder="បញ្ចូលចំនួនទឹកប្រាក់"
-          min="0"
-          className="w-full pl-4 pr-10 py-3 text-lg border-2 border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-        />
-        <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500 font-bold">
-          ៛
-        </span>
+      <div className="flex items-center gap-2">
+        <div className="relative flex-grow">
+          <input
+            id={id}
+            type="number"
+            value={amount}
+            onChange={(e) => onAmountChange(id, e.target.value)}
+            placeholder="បញ្ចូលចំនួនទឹកប្រាក់"
+            min="0"
+            className="w-full pl-4 pr-10 py-3 text-lg border-2 border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+          />
+          <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500 font-bold">
+            ៛
+          </span>
+        </div>
+        <button
+            onClick={() => onRemove(id)}
+            aria-label={`លុប ${label}`}
+            className="flex-shrink-0 p-3 bg-slate-100 text-slate-500 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clipRule="evenodd" />
+            </svg>
+        </button>
       </div>
     </div>
   );
