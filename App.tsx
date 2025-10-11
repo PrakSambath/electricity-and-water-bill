@@ -148,28 +148,57 @@ const App: React.FC = () => {
         
         {total > 0 && (
           <footer className="p-6 md:p-8 bg-slate-50 border-t border-slate-200 flex-shrink-0">
-            <h2 className="text-xl font-bold text-slate-700 mb-4 no-print">សេចក្តីសង្ខេបនៃវិក្កយបត្រ</h2>
             <div className="space-y-3">
-              <SummaryLine
-                label="ថ្លៃអគ្គិសនី"
-                amount={electricityAmount}
-                formatFn={formatCurrency}
-              />
-              <SummaryLine
-                label="ថ្លៃសេវាអគ្គិសនី"
-                amount={electricityFee}
-                formatFn={formatCurrency}
-              />
-              <SummaryLine
-                label="ថ្លៃទឹកស្អាត"
-                amount={waterAmount}
-                formatFn={formatCurrency}
-              />
-              <SummaryLine
-                label="ថ្លៃសេវាទឹកស្អាត"
-                amount={waterFee}
-                formatFn={formatCurrency}
-              />
+              <h2 className="text-xl font-bold text-slate-700 mb-4 no-print">សេចក្តីសង្ខេបនៃវិក្កយបត្រ</h2>
+              
+              {/* Screen-only aggregated summary */}
+              <div className="no-print space-y-3">
+                <SummaryLine
+                  label="ថ្លៃអគ្គិសនី"
+                  amount={electricityAmount}
+                  formatFn={formatCurrency}
+                />
+                <SummaryLine
+                  label="ថ្លៃសេវាអគ្គិសនី"
+                  amount={electricityFee}
+                  formatFn={formatCurrency}
+                />
+                <SummaryLine
+                  label="ថ្លៃទឹកស្អាត"
+                  amount={waterAmount}
+                  formatFn={formatCurrency}
+                />
+                <SummaryLine
+                  label="ថ្លៃសេវាទឹកស្អាត"
+                  amount={waterFee}
+                  formatFn={formatCurrency}
+                />
+              </div>
+
+              {/* Print-only detailed breakdown */}
+              <div className="print-only text-sm" style={{ display: 'none' }}>
+                <div className="space-y-1">
+                  {bills
+                    .filter(bill => parseFloat(bill.amount) > 0)
+                    .map((bill, index) => {
+                      const billLabel = bill.type === BillType.ELECTRICITY 
+                        ? `ថ្លៃអគ្គិសនី #${index + 1}` 
+                        : `ថ្លៃទឹកស្អាត #${index + 1}`;
+                      return (
+                        <React.Fragment key={`print-bill-${bill.id}`}>
+                          <div className="flex justify-between">
+                            <span>{billLabel}</span>
+                            <span>{formatCurrency(parseFloat(bill.amount))}</span>
+                          </div>
+                          <div className="flex justify-between pl-4">
+                            <span>+ ថ្លៃសេវា</span>
+                            <span>{formatCurrency(SERVICE_FEE)}</span>
+                          </div>
+                        </React.Fragment>
+                      );
+                    })}
+                </div>
+              </div>
 
               <div className="border-t border-dashed border-slate-300 my-4"></div>
               
