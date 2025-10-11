@@ -105,7 +105,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <main id="invoice-content" className="flex-grow overflow-y-auto p-6 md:p-8">
+        <main id="invoice-content" className="flex-grow overflow-y-auto p-6 md:p-8 no-print">
           <div className="space-y-4">
             {bills.map(bill => (
               <BillInput
