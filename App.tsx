@@ -15,8 +15,6 @@ const App: React.FC = () => {
     }
   });
 
-  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
-
   useEffect(() => {
     localStorage.setItem('invoice-bills', JSON.stringify(bills));
   }, [bills]);
@@ -83,20 +81,8 @@ const App: React.FC = () => {
   } = calculations;
   
   const handlePrint = () => {
-    setIsPrintModalOpen(false);
-    setTimeout(() => {
-        window.print();
-    }, 100);
+    window.print();
   };
-
-  const openPrintModal = () => {
-    setIsPrintModalOpen(true);
-  }
-  
-  const closePrintModal = () => {
-    setIsPrintModalOpen(false);
-  }
-
 
   return (
     <div className="bg-slate-100 min-h-screen flex items-center justify-center">
@@ -209,7 +195,7 @@ const App: React.FC = () => {
 
               <div className="mt-6 pt-4 no-print">
                 <button
-                  onClick={openPrintModal}
+                  onClick={handlePrint}
                   className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
                   aria-label="បោះពុម្ពវិក្កយបត្រ"
                 >
@@ -229,38 +215,6 @@ const App: React.FC = () => {
           </footer>
         )}
       </div>
-
-      {isPrintModalOpen && (
-        <div className="no-print fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-labelledby="print-modal-title">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm transform transition-all text-center">
-            <div className="p-6">
-              <h3 id="print-modal-title" className="text-xl font-bold text-slate-800 font-koulen">
-                ត្រៀមបោះពុម្ព
-              </h3>
-              <div className="my-6 text-left text-sm text-slate-600 space-y-2">
-                <p>1. សូមប្រាកដថាម៉ាស៊ីនបោះពុម្ពរបស់អ្នកបានភ្ជាប់ជាមួយឧបករណ៍នេះតាមរយៈ Bluetooth។</p>
-                <p>2. ចូលទៅកាន់ការកំណត់ Bluetooth របស់ឧបករណ៍អ្នក ហើយធ្វើការភ្ជាប់។</p>
-                <p>3. អាសយដ្ឋានរបស់ម៉ាស៊ីនបោះពុម្ពអាចមើលលើតែម (ឧ: <code className="bg-slate-200 px-1 rounded">66:22:6B:2F:34:79</code>)។</p>
-                <p>4. នៅពេលភ្ជាប់រួចរាល់ សូមចុចប៊ូតុងខាងក្រោមដើម្បីបន្ត។</p>
-              </div>
-            </div>
-            <div className="bg-slate-50 px-6 py-4 flex flex-col gap-3 rounded-b-2xl">
-              <button
-                onClick={handlePrint}
-                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-bold"
-              >
-                បន្តបោះពុម្ព
-              </button>
-              <button
-                onClick={closePrintModal}
-                className="w-full px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors font-bold"
-              >
-                បោះបង់
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
